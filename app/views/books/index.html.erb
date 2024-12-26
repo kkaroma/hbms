@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Books" %>
+<% if user_signed_in? %>
+  <%= link_to "Add a Book", new_book_path, class: "btn btn-success" %>
+<% end %>
+
+<h1 class="display-1">Books</h1>
+
+  <div id="books">
+      <div class="row">
+      <% @books.each do |book| %>
+      <div class="col-md-2 col-sm-3">
+          <% if book.cover.attached? %>
+              <%= image_tag book.cover, class: "img-thumbnail", alt: book.title %>
+          <% else %>
+              <p>No cover image uploaded</p>
+          <% end %>
+      </div>
+      <div class="col-md-4 col-sm-3">
+          <%= render book %>
+
+          
+
+          <p>
+          <%= link_to "Show this book", book %>
+          </p> 
+          <hr />
+      </div>
+      
+      <% end %>
+      </div>
+      
+
+  </div>
+
+<% if user_signed_in? %>
+  <%= link_to "Add a Book", new_book_path, class: "btn btn-success" %>
+<% end %>

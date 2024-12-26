@@ -1,0 +1,35 @@
+<div id="<%= dom_id book %>">
+  <p>
+    <!-- <strong>Title:</strong> -->
+    <h3 class="text-primary"><%= link_to book.title, book %></h3>
+  </p>
+
+    <p class="text-muted"><strong><%= book.subtitle %></strong></p>
+
+
+  <p>
+    <strong>Author:</strong>
+    <%= book.author %>
+  </p>
+
+  <p>
+    <strong>Genre:</strong>
+    <%= book.genre %>
+  </p>
+
+  <p>
+    <strong>Published date:</strong>
+    <%= book.published_date %>
+  </p>
+
+  <p>
+    <strong>Isbn:</strong>
+    <%= book.isbn %>
+  </p>
+
+  <p>
+    <strong>Summary:</strong>
+    <%= book.summary %>
+  </p>
+
+</div>

@@ -1,0 +1,52 @@
+<p style="color: green"><%= notice %></p>
+<div class="row">
+  
+<h1><%= @book.title %></h1>
+<div class="col-md-3">
+
+<% if @book.cover.attached? %>
+              <%= image_tag @book.cover, class: "img-thumbnail", alt: @book.title %>
+          <% else %>
+              <p>No cover image uploaded</p>
+          <% end %>
+  </div>
+  <div class= "col-md-9">
+
+<p class="text-muted"><strong><%= @book.subtitle %></strong></p>
+<p><strong>Author:</strong> <%= @book.author %></p>
+<p><strong>Genre:</strong> <%= @book.genre %></p>
+<p><strong>Published Date:</strong> <%= @book.published_date %></p>
+<p><strong>Summary:</strong> <%= @book.summary %></p>
+
+<div>
+  <%= link_to "Edit this book", edit_book_path(@book), class: "btn btn-primary mt-2" %> |
+  <%= link_to "Back to books", books_path, class: "btn btn-primary mt-2" %>
+
+  <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-danger mt-2 mb-4" %>
+</div>
+
+<!-- <h2>Reviews</h2> -->
+<%= link_to "Add Review for ", new_book_review_path(@book) %>
+<% @book.reviews.each do |review| %>
+  <div>
+    <h3><%= review.title %></h3>
+    <p><%= review.content %></p>
+    <p><strong>Rating:</strong> <%= review.rating %>/5</p>
+    <p>By <%= review.user.email %></p>
+
+    <h4>Comments</h4>
+    <% review.comments.each do |comment| %>
+      <p><%= comment.content %> - <strong><%= comment.user.email %></strong></p>
+    <% end %>
+    <%= form_with model: [@book,review, Comment.new] do |f| %>
+      <%= f.text_area :content, placeholder: "Add a comment..." %>
+      <%= f.submit "Post Comment" %>
+    <% end %>
+  </div>
+
+  </div>
+  </div>
+<% end %>
+
+
+
