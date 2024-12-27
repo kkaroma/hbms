@@ -39,7 +39,11 @@
       <p><%= comment.content %> - <strong><%= comment.user.email %></strong></p>
     <% end %>
     <%= form_with model: [@book,review, Comment.new] do |f| %>
-      <%= f.text_area :content, placeholder: "Add a comment..." %>
+      <div class="mb-3">
+        <%= f.text_area :content, placeholder: "Add a comment...", class: "form-control", rows: 4 %>
+      </div>
+
+
       <%= f.submit "Post Comment" %>
     <% end %>
   </div>

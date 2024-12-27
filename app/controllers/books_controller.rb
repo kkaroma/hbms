@@ -67,4 +67,9 @@ class BooksController < ApplicationController
     def book_params
       params.expect(book: [ :title, :subtitle, :author, :genre, :published_date, :isbn, :cover, :summary ])
     end
+  protected
+  def authenticate_admin!
+    authenticate_user!
+    redirect_to :somewhere, status: :forbidden unless current_user.admin?
+  end
 end
