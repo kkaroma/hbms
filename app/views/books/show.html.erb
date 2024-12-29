@@ -19,14 +19,19 @@
 <p><strong>Summary:</strong> <%= @book.summary %></p>
 
 <div>
-  <%= link_to "Edit this book", edit_book_path(@book), class: "btn btn-primary mt-2" %> |
+
+  <% if @book.user == current_user %>
+  <%= link_to "Edit", edit_book_path(@book), class: "btn btn-secondary" %>
+  <%= link_to "Delete", @book, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<% end %>
+
+
   <%= link_to "Back to books", books_path, class: "btn btn-primary mt-2" %>
 
-  <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-danger mt-2 mb-4" %>
 </div>
 
 <!-- <h2>Reviews</h2> -->
-<%= link_to "Add Review for ", new_book_review_path(@book) %>
+<%= link_to "Write a Review for this Book ", new_book_review_path(@book) %>
 <% @book.reviews.each do |review| %>
   <div>
     <h3><%= review.title %></h3>

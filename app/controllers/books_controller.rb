@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  # before_action :authenticate_admin!, only: [ :edit, :update ]
+  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   # GET /books or /books.json
   def index
@@ -21,7 +23,7 @@ class BooksController < ApplicationController
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.build(book_params)
 
     respond_to do |format|
       if @book.save
@@ -63,6 +65,12 @@ class BooksController < ApplicationController
       @book = Book.find(params.expect(:id))
     end
 
+    def authorize_user!
+      unless @book.user == current_user
+        redirect_to books_path, alert: "You are not authorized to perform this action."
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def book_params
       params.expect(book: [ :title, :subtitle, :author, :genre, :published_date, :isbn, :cover, :summary ])
@@ -70,6 +78,6 @@ class BooksController < ApplicationController
   protected
   def authenticate_admin!
     authenticate_user!
-    redirect_to :somewhere, status: :forbidden unless current_user.admin?
+    redirect_to root_path, status: :forbidden unless current_user.admin?
   end
 end
