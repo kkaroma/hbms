@@ -23,11 +23,14 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json      @review = Review.find(book_id)
 
   def create
-    @comment = Comment.new(comment_params)
+    Rails.logger.info("Incoming params: #{params.inspect}")
+    # @comment = Comment.new(comment_params)
+    @comment = @review.comments.build(comment_params)
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: "Comment was successfully created." }
+        format.html { redirect_to book_path(@review.book), notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -54,7 +57,7 @@ class CommentsController < ApplicationController
     @comment.destroy!
 
     respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to @review, status: :see_other, notice: "Comment was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -62,15 +65,18 @@ class CommentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find(params.expect(:id))
+      Rails.logger.info("Incoming params: #{params.inspect}")
+      @comment = Comment.find(params[:id])
     end
 
     def set_review
-      @review = Review.find(:book_id)
+      Rails.logger.info("Incoming params: #{params.inspect}")
+      # @review = Review.find(:review_id)
+      @review = Review.find(params[:review_id])
     end
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.expect(comment: [ :content, :review_id, :user_id ])
+      params.require(:comment).permit(:content, :review_id, :user_id)
     end
 end
