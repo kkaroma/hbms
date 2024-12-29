@@ -11,32 +11,31 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
+  <div class="row">
+    <div class="col-sm-6">
 
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.textarea :content %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :rating, style: "display: block" %>
-    <%= form.number_field :rating %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.textarea :content, class: "form-control", rows: 6 %>
+      </div>
 
-  <div>
-    <%= form.label :book_id, style: "display: block" %>
-    <%= form.text_field :book_id %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :rating, class: "form-label" %>
+        <%= form.number_field :rating, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+      <div>
+        <%= form.submit "submit", class:"btn btn-primary" %>
+      </div>
+    <% end %>
+    </div>
+
+</div>
+
+
