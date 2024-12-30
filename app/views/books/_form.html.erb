@@ -30,10 +30,10 @@
         <%= form.text_field :author, class: "form-control" %>
       </div>
 
-      
+
       <div class="mb-3">
-        <%= form.label :genre, class: "form-label" %>
-        <%= form.text_field :genre, class: "form-control" %>
+         <%= form.label :category_id, "Category", class: "form-label" %>
+         <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select a Category" }, { class: "form-select" } %>
       </div>
 
       <div class="mb-3">
