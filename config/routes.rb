@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # resources :comments
   # resources :reviews
   # devise_for :users
-  # resources :books
+  resources :categories
 
 
   devise_for :users

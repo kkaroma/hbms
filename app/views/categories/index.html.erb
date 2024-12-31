@@ -1,0 +1,13 @@
+<h1>Genres</h1>
+
+<%= link_to 'Add Category', new_category_path, class: 'btn btn-primary' %>
+
+<ul>
+  <% @categories.each do |category| %>
+    <li>
+      <%= link_to category.name, category_path(category) %>
+      <%= link_to 'Edit', edit_category_path(category), class: 'btn btn-secondary' %>
+      <%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    </li>
+  <% end %>
+</ul>
