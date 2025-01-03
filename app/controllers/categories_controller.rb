@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
+  before_action :authenticate_admin!
 
   # GET /genres
   def index
@@ -54,5 +55,11 @@ class CategoriesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  protected
+  def authenticate_admin!
+    authenticate_user!
+    redirect_to root_path, status: :forbidden unless current_user.admin?
   end
 end
