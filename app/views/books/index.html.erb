@@ -2,7 +2,7 @@
 
 <% content_for :title, "Books" %>
 <% if user_signed_in? %>
-  <%= link_to "Add a Book", new_book_path, class: "btn btn-success" %>
+  <%= link_to "Add a Book", new_book_path, class: "btn btn-success" if user_signed_in? %>
 <% end %>
 
 <h1 class="display-1">Books</h1>
