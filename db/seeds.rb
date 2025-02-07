@@ -13,6 +13,7 @@ categories = [ "Fiction", "Non-Fiction", "Mystery", "Biography", "Science Fictio
 
 categories.each do |category|
   Category.find_or_create_by(name: category)
+end
 
 
 admin_email = "admin@karoma.co.tz"
@@ -27,4 +28,3 @@ admin_password = "MyAdmin25!"
   )
 
   puts "Admin user created: #{admin.email}"
-end
