@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby '3.3.6'
+ruby "3.3.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.0"
@@ -28,6 +28,8 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
+
+gem "sidekiq"
 
 gem "simple_form"
 gem "devise"
