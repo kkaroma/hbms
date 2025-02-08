@@ -5,7 +5,12 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.order("id DESC")
+    # @books = Book.order("id DESC")
+    if params[:my_books]
+      @books = current_user.books.order("id DESC")
+    else
+      @books = Book.order("id DESC")
+    end
   end
 
   # GET /books/1 or /books/1.json
