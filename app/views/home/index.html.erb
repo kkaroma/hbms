@@ -1,0 +1,10 @@
+<h1>Welcome to the Book Management System</h1>
+<p>Manage and track your books with ease.</p>
+
+<% if user_signed_in? %>
+  <%= link_to "View Books", books_path, class: "btn btn-primary" %>
+  <%= link_to "My Books", books_path(my_books: true), class: "btn btn-secondary" %>
+<% else %>
+  <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-success" %>
+  <%= link_to "Login", new_user_session_path, class: "btn btn-primary" %>
+<% end %>
