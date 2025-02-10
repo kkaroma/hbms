@@ -31,7 +31,7 @@
 </div>
 
 <!-- <h2>Reviews</h2> -->
-<%= link_to "Write a Review for this Book ", new_book_review_path(@book) %>
+<%= link_to "Write a Review for this Book ", new_book_review_path(@book) if @book.user == current_user %>
 <% @book.reviews.each do |review| %>
   <div>
     <h3><%= review.title %></h3>
