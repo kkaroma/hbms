@@ -1,5 +1,29 @@
-<h1>Welcome to the Book Management System</h1>
-<p>Manage and track your books with ease.</p>
+ <!-- Mashead header-->
+        <header class="masthead">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6">
+                        <!-- Mashead text and app badges-->
+                        <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                            <h1 class="display-1 lh-1 mb-3">Home Books Management System.</h1>
+                            <p class="lead fw-normal text-muted mb-5">Keep records of your readings and share the lessons</p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Masthead device mockup feature-->
+                        <%= image_tag "a-book.png" %>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+
+
+
+
 
 <% if user_signed_in? %>
   <%= link_to "View Books", books_path, class: "btn btn-primary" %>
