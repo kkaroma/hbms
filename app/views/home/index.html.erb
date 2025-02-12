@@ -34,6 +34,66 @@
 
 
 
+    <div class="container mt-5">
+        <h1 class="display-4">Recent Added Books</h1>
+                        <div id="books">
+                    <div class="row">
+                    <% @books.each do |book| %>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <% if book.cover.attached? %>
+                                <%= image_tag book.cover, class: "img-thumbnail", alt: book.title %>
+                        <% else %>
+                            <p>No cover image uploaded</p>
+                        <% end %>
+                    </div>
+                    <div class="col-md-4 col-sm-3 col-xs-12">
+                            <h3 class="text-primary"><%= link_to book.title, book %></h3>
+                
+
+                    <p class="text-muted"><strong><%= book.subtitle %></strong></p>
+
+
+                <p>
+                    <strong>Isbn:</strong>
+                    <%= book.isbn %>
+
+                <p>
+                    <strong>Author:</strong>
+                    <%= book.author %>
+                </p>
+
+                <p>
+                    <strong>Category:</strong>
+                    <%= book.category.name %>
+                </p>
+
+                <p>
+                    <strong>Published date:</strong>
+                    <%= book.published_date %>
+                
+                </p>
+
+                
+
+
+                        
+
+                        <p>
+                        <%= link_to "Show this book", book %>
+                        
+                        </p> 
+                        <hr />
+                    </div>
+                    
+                    <% end %>
+                    </div>
+                    
+
+                </div>
+    </div>
+
+
+
 
 
 
