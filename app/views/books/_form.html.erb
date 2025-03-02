@@ -1,65 +1,68 @@
-<%= form_with(model: book) do |form| %>
-  <% if book.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+<div class="container mt-5">
+  <div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4"><%= book.new_record? ? "New Book" : "Edit Book" %></h2>
 
-      <ul>
-        <% book.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="row"></div>
-    <div class="col-md-6">
-      <div class="mb-3">
-        <%= form.label :title, class: "form-label" %>
-        <%= form.text_field :title, class: "form-control" %>
+    <% if book.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+        <ul>
+          <% book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
+    <% end %>
 
+    <%= form_with(model: book, local: true, html: { class: "needs-validation" }) do |form| %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :title, class: "form-label" %>
+            <%= form.text_field :title, class: "form-control", required: true %>
+          </div>
 
-      <div class="mb-3">
-        <%= form.label :subtitle, class: "form-label" %>
-        <%= form.text_field :subtitle, class: "form-control" %>
+          <div class="mb-3">
+            <%= form.label :subtitle, class: "form-label" %>
+            <%= form.text_field :subtitle, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :author, class: "form-label" %>
+            <%= form.text_field :author, class: "form-control", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :category_id, "Category", class: "form-label" %>
+            <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select a Category" }, { class: "form-select", required: true } %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :published_date, class: "form-label" %>
+            <%= form.date_field :published_date, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :isbn, class: "form-label" %>
+            <%= form.text_field :isbn, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :cover, class: "form-label" %>
+            <%= form.file_field :cover, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :summary, class: "form-label" %>
+            <%= form.text_area :summary, class: "form-control", rows: 4 %>
+          </div>
+
+          <div class="mt-3 d-grid">
+            <%= form.submit "Submit", class: "btn btn-primary btn-lg" %>
+          </div>
+        </div>
       </div>
-
-      
-      <div class="mb-3">
-        <%= form.label :author, class: "form-label" %>
-        <%= form.text_field :author, class: "form-control" %>
-      </div>
-
-
-      <div class="mb-3">
-         <%= form.label :category_id, "Category", class: "form-label" %>
-         <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select a Category" }, { class: "form-select" } %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :published_date, class: "form-label" %>
-        <%= form.date_field :published_date, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :isbn, class: "form-label" %>
-        <%= form.text_field :isbn, class: "form-control" %>
-      </div>
-
-       <div class="mb-3">
-        <%= form.label :cover, class: "form-label" %>
-        <%= form.file_field :cover, class: "form-control" %>
-      </div>
-
-
-      <div class="mb-3">
-        <%= form.label :summary, class: "form-label" %>
-        <%= form.text_area :summary, class: "form-control", rows: 4 %>
-      </div>
-
-      <div class="mt-3">
-        <%= form.submit "Submit", class: "btn btn-primary" %>
-      </div>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>
