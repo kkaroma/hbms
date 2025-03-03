@@ -31,6 +31,8 @@ gem "solid_cable"
 
 gem "sidekiq"
 
+gem 'good_job'
+
 gem "simple_form"
 gem "devise"
 
