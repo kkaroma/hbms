@@ -1,13 +1,38 @@
-<h1>Genres</h1>
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 class="mb-3">Genres</h1>
 
-<%= link_to 'Add Category', new_category_path, class: 'btn btn-primary' %>
+      <%= link_to 'Add Category', new_category_path, class: 'btn btn-primary mb-3' %>
 
-<ul>
-  <% @categories.each do |category| %>
-    <li>
-      <%= link_to category.name, category_path(category) %>
-      <%= link_to 'Edit', edit_category_path(category), class: 'btn btn-secondary' %>
-      <%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-    </li>
-  <% end %>
-</ul>
+      <% if @categories.any? %>
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @categories.each do |category| %>
+              <tr>
+                <td><%= link_to category.name, category_path(category), class: 'text-decoration-none fw-bold' %></td>
+                <td>
+                  <%= link_to edit_category_path(category), class: 'btn btn-sm btn-secondary' do %>
+                    <i class="bi bi-pencil"></i> Edit
+                  <% end %>
+                  
+                  <%= link_to category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' do %>
+                    <i class="bi bi-trash"></i> Delete
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No categories available.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
