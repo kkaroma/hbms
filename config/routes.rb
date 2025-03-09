@@ -14,6 +14,17 @@ Rails.application.routes.draw do
     end
   end
   root "home#index"
+
+
+  # resources :wishlists, only: [ :index, :create, :destroy ] do
+  #   post "move_to_books/:id", to: "wishlists#move_to_books", as: "move_to_books"
+  # end
+
+  resources :wishlists, only: [ :index, :create, :destroy ] do
+    member do
+      post :move_to_books
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

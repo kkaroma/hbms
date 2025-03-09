@@ -64,6 +64,42 @@ class BooksController < ApplicationController
     end
   end
 
+  # Wishilist
+  def wishlist
+    @wishlist_books = current_user.wishlist_books.order("id DESC")
+  end
+
+  def add_to_wishlist
+    book = Book.find(params[:book_id])
+    if current_user.wishlist_books.include?(book)
+      redirect_to books_path, alert: "This book is already in your wishlist."
+    else
+      current_user.wishlist_books << book
+      redirect_to books_path, notice: "Book added to your wishlist."
+    end
+  end
+
+  def remove_from_wishlist
+    wishlist_entry = Wishlist.find_by(user: current_user, book_id: params[:book_id])
+    wishlist_entry.destroy if wishlist_entry
+    redirect_to wishlist_books_path, notice: "Book removed from your wishlist."
+  end
+
+  def move_to_books
+    if current_user.wishlist_books.include?(@book)
+      @book.update(user: current_user) # Mark the book as owned
+      current_user.wishlist_books.delete(@book)
+      redirect_to books_path, notice: "Book moved to your collection."
+    else
+      redirect_to wishlist_books_path, alert: "Book not found in wishlist."
+    end
+  end
+  # wishlist
+
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book

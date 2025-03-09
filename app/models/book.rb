@@ -7,4 +7,9 @@ class Book < ApplicationRecord
   has_one_attached :cover do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
   end
+  has_many :wishlists, dependent: :destroy
+
+  def in_wishlist?(user)
+    wishlists.exists?(user: user)
+  end
 end

@@ -1,0 +1,12 @@
+<h1>My Wishlist</h1>
+
+<% @wishlist_books.each do |book| %>
+  <div class="card">
+    <div class="card-body">
+      <h5><%= link_to book.title, book_path(book) %></h5>
+      <p><%= book.author %></p>
+      <%= link_to 'Move to My Books', move_to_books_book_path(book), method: :patch, class: 'btn btn-success' %>
+      <%= link_to 'Remove from Wishlist', remove_from_wishlist_book_path(book), method: :delete, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>
