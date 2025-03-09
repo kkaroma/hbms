@@ -17,7 +17,8 @@
           <div class="card shadow-sm">
             <% if book.cover.attached? %>
              
-            <%= image_tag book.cover.variant(resize_to_limit: [150, 200]), 
+           
+            <%= image_tag book.cover.variant(resize_to_limit: [300, 400]).processed,
              class: "card-img-top img-fluid", 
              alt: book.title, 
              style: "height: 150px; width: 100%; object-fit: cover; border-radius: 8px;" %>

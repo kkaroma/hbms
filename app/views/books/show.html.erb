@@ -6,7 +6,7 @@
       <!-- Book Cover -->
       <div class="col-md-4 text-center">
         <% if @book.cover.attached? %>
-          <%= image_tag @book.cover.variant(resize_to_limit: [300, 400]), 
+          <%= image_tag @book.cover.variant(resize_to_limit: [300, 400]).processed, 
               class: "img-thumbnail rounded", 
               alt: @book.title %>
         <% else %>
