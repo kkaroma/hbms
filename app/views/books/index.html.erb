@@ -52,6 +52,7 @@
                       <% wishlist_entry = book.wishlists.find_by(user: current_user) %>
                       <% if wishlist_entry %>
                         <%= link_to "Remove from Wishlist", wishlist_path(wishlist_entry), method: :delete, class: "btn btn-danger btn-sm" %>
+                        <%= link_to "Move to My Books", move_to_books_wishlist_path(wishlist_entry), method: :post, class: "btn btn-primary btn-sm" %>
                       <% end %>
                     <% else %>
                       <%= link_to "Add to Wishlist", wishlists_path(book_id: book.id), method: :post, class: "btn btn-outline-secondary btn-sm" %>

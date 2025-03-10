@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :wishlists, only: [ :index, :create, :destroy ] do
     member do
-      post :move_to_books
+      post :move_to_books  # This allows moving a wishlisted book to owned books
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
