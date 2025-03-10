@@ -14,40 +14,50 @@
     <div class="row">
       <% @books.each_with_index do |book, index| %>
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-          <div class="card shadow-sm">
-            <% if book.cover.attached? %>
-             
-           
-            <%= image_tag book.cover.variant(resize_to_limit: [300, 400]).processed,
-             class: "card-img-top img-fluid", 
-             alt: book.title, 
-             style: "height: 150px; width: 100%; object-fit: cover; border-radius: 8px;" %>
+          <div class="card shadow-sm p-2">
+            <div class="d-flex align-items-start">
+              <% if book.cover.attached? %>
+                <div class="flex-shrink-0">
+                  <%= image_tag book.cover.variant(resize_to_limit: [150, 200]).processed,
+                    class: "img-fluid rounded",
+                    alt: book.title,
+                    style: "width: 150px; height: 200px; object-fit: contain; background-color: #f8f9fa; padding: 5px;" %>
+                </div>
+              <% else %>
+                <div class="flex-shrink-0 d-flex align-items-center justify-content-center"
+                     style="width: 150px; height: 200px; background-color: #f8f9fa; text-align: center;">
+                  <span class="text-muted">No Cover Image</span>
+                </div>
+              <% end %>
 
+              <div class="flex-grow-1 ms-3">
+                <h5 class="card-title">
+                  <%= link_to book.title, book, class: "text-decoration-none text-primary" %>
+                </h5>
+                <p class="card-text text-muted"><strong><%= book.subtitle %></strong></p>
+                <p><strong>Author:</strong> <%= book.author %></p>
+                <p><strong>Category:</strong> <%= book.category.name %></p>
+                <p><strong>Published:</strong> <%= book.published_date %></p>
 
-            <% else %>
-              <div class="text-center p-3 bg-light">No Cover Image</div>
-            <% end %>
-
-            <div class="card-body">
-              <h5 class="card-title"><%= link_to book.title, book, class: "text-decoration-none text-primary" %></h5>
-              <p class="card-text text-muted"><strong><%= book.subtitle %></strong></p>
-              <p><strong>Author:</strong> <%= book.author %></p>
-              <p><strong>Category:</strong> <%= book.category.name %></p>
-              <p><strong>Published:</strong> <%= book.published_date %></p>
-
-              <div class="d-flex flex-wrap gap-2">
-                <%= link_to "Show", book, class: "btn btn-primary btn-sm" %>
-                <%= link_to "Edit", edit_book_path(book), class: "btn btn-warning btn-sm" %>
-                <%= link_to "Delete", book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
-
-                <% if book.in_wishlist?(current_user) %>
-                  <% wishlist_entry = book.wishlists.find_by(user: current_user) %>
-                  <% if wishlist_entry %>
-                    <%= link_to "Remove from Wishlist", wishlist_path(wishlist_entry), method: :delete, class: "btn btn-danger btn-sm" %>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <%= link_to "Show", book, class: "btn btn-primary btn-sm" %>
+                  
+                  <% if book.user == current_user %>
+                    <!-- Book belongs to current user: Show edit & delete buttons -->
+                    <%= link_to "Edit", edit_book_path(book), class: "btn btn-warning btn-sm" %>
+                    <%= link_to "Delete", book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+                  <% else %>
+                    <!-- Book does NOT belong to the user: Show Wishlist option -->
+                    <% if book.in_wishlist?(current_user) %>
+                      <% wishlist_entry = book.wishlists.find_by(user: current_user) %>
+                      <% if wishlist_entry %>
+                        <%= link_to "Remove from Wishlist", wishlist_path(wishlist_entry), method: :delete, class: "btn btn-danger btn-sm" %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to "Add to Wishlist", wishlists_path(book_id: book.id), method: :post, class: "btn btn-outline-secondary btn-sm" %>
+                    <% end %>
                   <% end %>
-                <% else %>
-                  <%= link_to "Add to Wishlist", wishlists_path(book_id: book.id), method: :post, class: "btn btn-outline-secondary btn-sm" %>
-                <% end %>
+                </div>
               </div>
             </div>
           </div>
