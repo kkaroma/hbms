@@ -1,33 +1,16 @@
-<div class="container">
-  <h1 class="display-4">My Wishlist</h1>
+<h1>My Wishlist</h1>
 
-  <% if @wishlisted_books.present? %>
-    <div class="row">
-      <% @wishlisted_books.each do |wishlist| %>
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-          <div class="d-flex align-items-center border p-3">
-            <% if wishlist.book.cover.attached? %>
-              <div class="me-3">
-                <%= image_tag wishlist.book.cover, class: "img-thumbnail", alt: wishlist.book.title, style: "width: 150px; height: auto;" %>
-              </div>
-            <% end %>
+<% if @wishlist_books.any? %>
+  <ul>
+    <% @wishlist_books.each do |book| %>
+      <li>
+        <%= link_to book.title, book_path(book) %>
+        <%= button_to "Remove", wishlist_path(book), method: :delete, data: { confirm: "Are you sure?" } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Your wishlist is empty.</p>
+<% end %>
 
-            <div>
-              <h5 class="text-primary"><%= link_to wishlist.book.title, wishlist.book %></h5>
-              <p class="text-muted"><strong><%= wishlist.book.subtitle %></strong></p>
-              <p><strong>Author:</strong> <%= wishlist.book.author %></p>
-
-              <%= link_to "Move to My Books", move_to_books_wishlist_path(wishlist), method: :post, class: "btn btn-success btn-sm" %>
-              <%= link_to "Remove", wishlist_path(wishlist), method: :delete, class: "btn btn-danger btn-sm" %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p>No books in your wishlist yet.</p>
-  <% end %>
-</div>
-
-
-
+<%= link_to "Back to Books", books_path %>

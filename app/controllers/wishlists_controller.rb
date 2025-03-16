@@ -2,46 +2,38 @@ class WishlistsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @wishlisted_books = current_user.wishlists.includes(:book)
+    @wishlist_books = current_user.wishlist_books
   end
 
   def create
-    book = Book.find(params[:book_id])
+    # book = Book.find(params[:book_id])
+    # wishlist_item = current_user.wishlists.new(book: book)
 
-    if current_user.wishlists.exists?(book: book)
-      redirect_back fallback_location: books_path, alert: "Book is already in your Wishlist."
-    else
-      wishlist = current_user.wishlists.build(book: book)
-      if wishlist.save
-        redirect_back fallback_location: books_path, notice: "Book added to Wishlist."
-      else
-        redirect_back fallback_location: books_path, alert: "Could not add to Wishlist."
-      end
-    end
+    # if wishlist_item.save
+    #   redirect_to books_path, notice: "#{book.title} has been added to your wishlist."
+    # else
+    #   redirect_to books_path, alert: "This book is already in your wishlist."
+    # end
+
+
+    book = Book.find(params[:book_id])
+  wishlist_item = current_user.wishlists.new(book: book)
+
+  if wishlist_item.save
+    redirect_to books_path, notice: "#{book.title} has been added to your wishlist."
+  else
+    redirect_to books_path, alert: "Error: #{wishlist_item.errors.full_messages.join(', ')}"
+  end
   end
 
   def destroy
-    wishlist = current_user.wishlists.find_by(id: params[:id])
+    wishlist_item = current_user.wishlists.find_by(book_id: params[:id])
 
-    if wishlist
-      wishlist.destroy
-      redirect_back fallback_location: books_path, notice: "Removed from Wishlist."
+    if wishlist_item
+      wishlist_item.destroy
+      redirect_to wishlists_path, notice: "Book removed from your wishlist."
     else
-      redirect_back fallback_location: books_path, alert: "Wishlist entry not found."
-    end
-  end
-
-  def move_to_books
-    wishlist_entry = current_user.wishlists.find(params[:id])
-
-    if wishlist_entry
-      book = wishlist_entry.book
-      wishlist_entry.destroy  # Remove from Wishlist
-      # Here you can add logic to assign ownership (if needed)
-
-      redirect_back fallback_location: books_path, notice: "#{book.title} moved to your books."
-    else
-      redirect_back fallback_location: books_path, alert: "Could not move book."
+      redirect_to wishlists_path, alert: "Book not found in your wishlist."
     end
   end
 end
