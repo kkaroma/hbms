@@ -1,16 +1,18 @@
-<h1>My Wishlist</h1>
+  <div class="container">
+  <h1>My Wishlist</h1>
+  
+  <% if @wishlist_books.any? %>
+    <ul>
+      <% @wishlist_books.each do |book| %>
+        <li>
+          <%= link_to book.title, book_path(book) %>
+          <%= button_to "Remove", wishlist_path(book), method: :delete, data: { confirm: "Are you sure?" } %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Your wishlist is empty.</p>
+  <% end %>
 
-<% if @wishlist_books.any? %>
-  <ul>
-    <% @wishlist_books.each do |book| %>
-      <li>
-        <%= link_to book.title, book_path(book) %>
-        <%= button_to "Remove", wishlist_path(book), method: :delete, data: { confirm: "Are you sure?" } %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Your wishlist is empty.</p>
-<% end %>
-
-<%= link_to "Back to Books", books_path %>
+  <%= link_to "Back to Books", books_path %>
+</div>
